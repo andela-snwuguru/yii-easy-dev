@@ -2,14 +2,15 @@
 
 class YedModule extends CWebModule
 {
-	public $models = array('Migration', 'YedLogger');
+	public $models = array();
 	public $install = false;
 	public $dropTable = false;
 	public $dropColumn = false;
 	public $useDefaultColumns = true;
 	private $default_models = array(
-			'Migration',
+			'YedMigration',
 			'YedActionLog',
+			'YedAccessLog',
 		);
 	public $default_columns = array(
             'id' => 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY',

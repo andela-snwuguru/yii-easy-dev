@@ -73,21 +73,23 @@ class YedOperation {
     * This method will also create the columns as defined in the model
     * @param String $model_name the class name of the model
     */
-    static function createTable($model_name){
+    static function createTable($model_name, $migration = false){
         $columns = self::getColumns($model_name);
         $command = Yii::app()->db->createCommand();
 
         if (!self::tableExists($model_name::$_table_name)) {
             $command->createTable($model_name::$_table_name, $columns);
             Y::info('Table:'.$model_name::$_table_name.' Successfully Created');
-            self::proccessColumns($model_name);
+            if($migration){
+                YedMigration::add($model_name, $columns);
+            }
         }else{
             if(Y::getModule()->dropTable){
                 self::dropTable($model_name::$_table_name);
                 self::createTable($model_name);
             }else{
                 Y::info('Table:'.$model_name::$_table_name.' Already Exists');
-                self::proccessColumns($model_name);
+                self::proccessColumns($model_name, $migration);
             }
         }
     }
@@ -96,10 +98,24 @@ class YedOperation {
     * Creates the columns as defined in the model
     * @param String $model_name the class name of the model
     */
-    public static function proccessColumns($model_name) {
+    public static function proccessColumns($model_name, $migration = false) {
         $columns = self::getColumns($model_name);
+        if($migration){
+            YedMigration::add($model_name, $columns);
+        }
+
         foreach ($columns as $column_name => $column_params) {
             self::addColumn($model_name, $column_name, $column_params);
+        }
+    }
+
+    public static function dropRemovedColumns($model_name, $column_params, $migrate_params){
+        foreach ($migrate_params as $column_name => $value) {
+            if(!isset($column_params[$column_name])){
+                if(self::dropColumn($model_name, $column_name)){
+                    Y::info($column_name.' has been dropped');
+                }
+            }
         }
     }
 
@@ -113,13 +129,15 @@ class YedOperation {
     public static function addColumn($model_name, $column_name, $column_params) {
         $command = Yii::app()->db->createCommand();
         if(!self::columnExists($model_name::$_table_name, $column_name)){
-            if($command->addColumn($model_name::$_table_name, $column_name, $column_params)){
+            try {
+                $command->addColumn($model_name::$_table_name, $column_name, $column_params);
                 Y::info($column_name.' Added to '. $model_name::$_table_name);
                 return true;
-            }else{
+            } catch (Exception $e) {
                 Y::err('Unable to add '.$column_name.' to '. $model_name::$_table_name);
                 return false;
             }
+
         }else{
             if(Y::getModule()->dropColumn){
                 self::dropColumn($model_name, $column_name);
@@ -142,16 +160,15 @@ class YedOperation {
     public static function updateColumn($model_name, $column_name, $column_params) {
         if(strpos($column_params, 'PRIMARY'))
             return true;
-
-        $command = Yii::app()->db->createCommand();
-        if(!self::columnExists($model_name::$_table_name, $column_name)){
-            return false;
-        }
-
-        if($command->alterColumn($model_name::$_table_name, $column_name, $column_params) === 0){
+        try{
+            $command = Yii::app()->db->createCommand();
+            if(!self::columnExists($model_name::$_table_name, $column_name)){
+                return false;
+            }
+            $command->alterColumn($model_name::$_table_name, $column_name, $column_params);
             Y::info($column_name.' updated');
             return true;
-        }else{
+        }catch (Exception $e) {
             Y::err('Unable to update '.$column_name);
             return false;
         }
@@ -165,11 +182,16 @@ class YedOperation {
     */
     public static function dropColumn($model_name, $column_name){
         $command = Yii::app()->db->createCommand();
-        if(!self::columnExists($model_name::$_table_name, $column_name)){
+        try{
+            if(!self::columnExists($model_name::$_table_name, $column_name)){
+                return false;
+            }
+           $command->dropColumn($model_name::$_table_name, $column_name);
+           return true;
+        }catch (Exception $e) {
             return false;
         }
-
-        return $command->dropColumn($model_name::$_table_name, $column_name) === 0;
+        return false;
     }
 
 }

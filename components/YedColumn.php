@@ -115,8 +115,20 @@ class YedColumn
         return array();
     }
 
-    public static function getDataPovider(){
-        return array();
+    public static function getDataPovider($model){
+        // $fields = $model
+        // $criteria = new CDbCriteria;
+        // if(self::$fields)
+        //     foreach (self::$fields as $field){
+        //         $varname = $field->varname;
+        //         $criteria->compare($varname,$this->$varname,true);
+        //     }
+
+        // $criteria->order = 'id DESC';
+
+        // return new CActiveDataProvider($this, array(
+        //     'criteria'=>$criteria,
+        // ));
     }
 }
 

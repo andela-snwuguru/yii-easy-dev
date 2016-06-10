@@ -3,6 +3,7 @@
 class YedActionLog extends YedActiveRecord
 {
     public static $_table_name = 'yed_action_log';
+    public $log = false;
 
     public static function setColumns(){
         self::$columns = array(
@@ -28,12 +29,16 @@ class YedActionLog extends YedActiveRecord
         return parent::model($className);
     }
 
-    /**
-     * @return string the associated database table name
-     */
-    public function tableName()
-    {
-        return self::_table_name;
+
+    public static function add($action, $model){
+    	$log = new self;
+        $log->model_id = $model->id;
+        $log->model_name = get_class($model);
+        $log->user_id = Y::userId();
+        $log->action = $action;
+        $log->model_data = json_encode($model->attributes);
+        $log->system_info = json_encode(YedUtil::getBrowser());
+        $log->save(false);
     }
 
 }

@@ -3,6 +3,7 @@ abstract class YedActiveRecord extends CActiveRecord
 {
     public static $columns = array();
     public static $_table_name = '';
+    public $log = true;
     public static $applyDefaultColumns = true;
 
     public function init(){
@@ -10,10 +11,20 @@ abstract class YedActiveRecord extends CActiveRecord
         self::setColumns();
     }
 
-    public static function setColumns(){
-        self::$columns = array(
 
-        );
+    /**
+     * @return string the associated database table name
+     */
+    public function tableName()
+    {
+        return static::$_table_name;
+    }
+
+    /**
+    * Override this function to define model columns
+    */
+    public static function setColumns(){
+        self::$columns = array();
     }
 
 
@@ -21,7 +32,7 @@ abstract class YedActiveRecord extends CActiveRecord
      * @return array validation rules for model attributes.
      */
     public function rules(){
-        return YedColumn::getRules();
+        return YedColumn::getRules(self);
     }
 
 
@@ -29,7 +40,7 @@ abstract class YedActiveRecord extends CActiveRecord
      * @return array relational rules.
      */
     public function relations(){
-        return YedColumn::getRelations();
+        return YedColumn::getRelations(self);
     }
 
      /**
@@ -37,7 +48,7 @@ abstract class YedActiveRecord extends CActiveRecord
      */
     public function attributeLabels()
     {
-        return YedColumn::getLabels();
+        return YedColumn::getLabels(self);
     }
 
 
@@ -48,7 +59,7 @@ abstract class YedActiveRecord extends CActiveRecord
 
     public function search()
     {
-        return YedColumn::getDataProvider();
+        return YedColumn::getDataProvider(self);
     }
 
 
