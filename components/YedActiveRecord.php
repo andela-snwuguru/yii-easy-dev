@@ -162,15 +162,6 @@ abstract class YedActiveRecord extends CActiveRecord
         ));
     }
 
-
-    public function beforeSave() {
-        if ($this->isNewRecord) {
-            if(isset($this->date_time) && !$this->date_time)
-                $this->date_time = new CDbExpression('NOW()');
-        }
-        return parent::beforeSave();
-    }
-
     public function behaviors() {
         return array(
             'ActionLoggerBehavior' => array(
