@@ -1,15 +1,17 @@
 <?php
 
-class Migration extends YedActiveRecord
+class YedActionLog extends YedActiveRecord
 {
-    public static $_table_name = 'yed_migration';
+    public static $_table_name = 'yed_action_log';
 
     public static function setColumns(){
         self::$columns = array(
             'user_id'=>array('field'=>YedColumn::integerField()),
-            'code'=>array('field'=>YedColumn::timestampField()),
-            'model'=>array('field'=>YedColumn::charField()),
-            'params'=>array('field'=>YedColumn::longTextField()),
+            'model_name'=>array('field'=>YedColumn::charField()),
+            'model_id'=>array('field'=>YedColumn::integerField()),
+            'action'=>array('field'=>YedColumn::charField()),
+            'model_data'=>array('field'=>YedColumn::longTextField()),
+            'system_info'=>array('field'=>YedColumn::longTextField()),
         );
 
         return self::$columns;

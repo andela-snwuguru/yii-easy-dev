@@ -3,7 +3,7 @@ abstract class YedActiveRecord extends CActiveRecord
 {
     public static $columns = array();
     public static $_table_name = '';
-
+    public static $applyDefaultColumns = true;
 
     public function init(){
         parent::init();

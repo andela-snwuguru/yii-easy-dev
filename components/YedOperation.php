@@ -57,10 +57,15 @@ class YedOperation {
     */
     static function getColumns($model_name){
         $columns = $model_name::setColumns();
-        if(Y::getModule()->useDefaultColumns){
-            $columns = array_merge($columns, Y::getModule()->default_columns);
+        $parse_columns = array();
+        foreach ($columns as $key => $value) {
+            $parse_columns[$key] = $value['field'];
         }
-        return $columns;
+
+        if(Y::getModule()->useDefaultColumns){
+            $parse_columns = array_merge($parse_columns, Y::getModule()->default_columns);
+        }
+        return $parse_columns;
     }
 
     /**
@@ -135,12 +140,15 @@ class YedOperation {
     * @return Boolean
     */
     public static function updateColumn($model_name, $column_name, $column_params) {
+        if(strpos($column_params, 'PRIMARY'))
+            return true;
+
         $command = Yii::app()->db->createCommand();
         if(!self::columnExists($model_name::$_table_name, $column_name)){
             return false;
         }
 
-        if($command->alterColumn($model_name::$_table_name, $column_name, $column_params)){
+        if($command->alterColumn($model_name::$_table_name, $column_name, $column_params) === 0){
             Y::info($column_name.' updated');
             return true;
         }else{
