@@ -27,21 +27,19 @@ abstract class YedActiveRecord extends CActiveRecord
      * @return array validation rules for model attributes.
      */
     public function rules(){
-         $required = array();
+        $required = array();
         $numerical = array();
         $rules = array();
         $safe = array();
         $fields = YedOperation::getColumns(get_class($this));
-
+        $columns = static::$columns;
         foreach ($fields as $field=>$value) {
             $field_rule = array();
-
-            if (!isset($value['validation'])){
+            $validation = isset($columns[$field]['validation']) ? $columns[$field]['validation'] : '';
+            if (empty($validation)){
                 array_push($safe, $field);
                 continue;
             }
-
-            $validation = $value['validation'];
 
             if(isset($validation['required']) && $validation['required'])
                 array_push($required, $field);
