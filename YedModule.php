@@ -7,6 +7,7 @@ class YedModule extends CWebModule
 	public $dropTable = false;
 	public $dropColumn = false;
 	public $useDefaultColumns = true;
+	public $default_order = 'id DESC';
 	private $default_models = array(
 			'YedMigration',
 			'YedActionLog',

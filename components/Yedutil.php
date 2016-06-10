@@ -278,7 +278,7 @@ class Yedutil
             'platform' => $platform,
             'pattern' => $pattern,
             'ip' => Y::ip(),
-            'current_location' => U::locationFromIp(Y::ip()),
+            'current_location' => YedUtil::locationFromIp(Y::ip()),
         );
     }
 
@@ -883,7 +883,7 @@ class Yedutil
                 // do work here
             }
         } catch(Exception $e) {
-           U::debug($e);
+           YedUtil::debug($e);
         }
     }
 

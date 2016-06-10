@@ -103,6 +103,18 @@ class YedColumn
         return trim($return);
     }
 
+    public static function many($model, $column_name){
+        return array($model::HAS_MANY, $model, $column_name);
+    }
+
+    public static function one($model, $column_name){
+        return array($model::HAS_ONE, $model, $column_name);
+    }
+
+    public static function owner($model, $column_name){
+        return array($model::BELONGS_TO, $model, $column_name);
+    }
+
     public static function getRules(){
         return array();
     }
@@ -115,20 +127,18 @@ class YedColumn
         return array();
     }
 
-    public static function getDataPovider($model){
-        // $fields = $model
-        // $criteria = new CDbCriteria;
-        // if(self::$fields)
-        //     foreach (self::$fields as $field){
-        //         $varname = $field->varname;
-        //         $criteria->compare($varname,$this->$varname,true);
-        //     }
+    public static function dataProvider($model_name, $model){
+        $fields = $model_name::$columns;
+        $criteria = new CDbCriteria;
+        foreach ($fields as $field=>$value){
+            $criteria->compare($field,$model->$field, true);
+        }
 
-        // $criteria->order = 'id DESC';
+        $criteria->order = 'id DESC';
 
-        // return new CActiveDataProvider($this, array(
-        //     'criteria'=>$criteria,
-        // ));
+        return new CActiveDataProvider($model_name, array(
+            'criteria'=>$criteria,
+        ));
     }
 }
 

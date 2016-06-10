@@ -59,6 +59,8 @@ class YedOperation {
         $columns = $model_name::setColumns();
         $parse_columns = array();
         foreach ($columns as $key => $value) {
+            if(!isset($value['field']))
+                continue;
             $parse_columns[$key] = $value['field'];
         }
 
