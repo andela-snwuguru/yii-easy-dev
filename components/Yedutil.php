@@ -909,11 +909,11 @@ class Yedutil
             $dif = ((($month - date('m')) - 1) * 30) + $day;
             $total += $dif;
         }
-            if($total > 0){
-                $comment = $total.' Day(s) to Birthday';
-            }else{
-                $comment = 'Birthday celebrated '.($total * -1).' Day(s) Ago';
-            }
+        if($total > 0){
+            $comment = $total.' Day(s) to Birthday';
+        }else{
+            $comment = 'Birthday celebrated '.($total * -1).' Day(s) Ago';
+        }
 
         return $comment;
 

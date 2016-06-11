@@ -103,42 +103,34 @@ class YedColumn
         return trim($return);
     }
 
+    /**
+    * Returns HAS_MANY relation configuration
+    * @param string $model the model name that has the foreign key
+    * @param string $column_name the column name in provided model
+    * @return array
+    */
     public static function many($model, $column_name){
         return array($model::HAS_MANY, $model, $column_name);
     }
 
+    /**
+    * Returns HAS_ONE relation configuration
+    * @param string $model the model name that has the foreign key
+    * @param string $column_name the column name in provided model
+    * @return array
+    */
     public static function one($model, $column_name){
         return array($model::HAS_ONE, $model, $column_name);
     }
 
+    /**
+    * Returns BELONGS_TO relation configuration
+    * @param string $model the model name that has the primary key
+    * @param string $column_name the column name in provided model
+    * @return array
+    */
     public static function owner($model, $column_name){
         return array($model::BELONGS_TO, $model, $column_name);
-    }
-
-    public static function getRules(){
-        return array();
-    }
-
-    public static function getRelations(){
-        return array();
-    }
-
-    public static function getLabels(){
-        return array();
-    }
-
-    public static function dataProvider($model_name, $model){
-        $fields = $model_name::$columns;
-        $criteria = new CDbCriteria;
-        foreach ($fields as $field=>$value){
-            $criteria->compare($field,$model->$field, true);
-        }
-
-        $criteria->order = 'id DESC';
-
-        return new CActiveDataProvider($model_name, array(
-            'criteria'=>$criteria,
-        ));
     }
 }
 

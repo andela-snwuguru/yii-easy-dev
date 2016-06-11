@@ -2,6 +2,9 @@
 
  class YedLogger extends CActiveRecordBehavior{
 
+    /**
+    * Logs records after save action
+    */
     public function afterSave($event) {
         $model = $this->getOwner();
         if ($model->getIsNewRecord()) {
@@ -11,6 +14,9 @@
         }
     }
 
+    /**
+    * Logs records before deletion
+    */
     public function beforeDelete($event){
         $this->log('deleted',$this->getOwner());
     }

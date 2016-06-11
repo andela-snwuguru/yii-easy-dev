@@ -87,10 +87,27 @@ class YedOperation {
         return $parse_columns;
     }
 
+  /**
+    * Returns an array of key value pair of defined columns from a model
+    * @param String $model_name the class name of the model
+    * @return Array
+    */
+    static function getFormFieldsBySection($model_name){
+        $columns = self::getFormFields($model_name);
+        $parse_columns = array();
+        foreach ($columns as $key => $value) {
+            $index = isset($value['section']) ? $value['section'] : 1 ;
+            $parse_columns[$index][$key] = $columns[$key];
+        }
+
+        return $parse_columns;
+    }
+
     /**
     * Creates table in database with table name specified in the model
     * This method will also create the columns as defined in the model
     * @param String $model_name the class name of the model
+    * @param boolean $migration if true, migration data will be logged
     */
     static function createTable($model_name, $migration = false){
         $columns = self::getColumns($model_name);
@@ -116,6 +133,7 @@ class YedOperation {
     /**
     * Creates the columns as defined in the model
     * @param String $model_name the class name of the model
+    * @param boolean $migration if true, migration data will be logged
     */
     public static function proccessColumns($model_name, $migration = false) {
         $columns = self::getColumns($model_name);
@@ -128,6 +146,12 @@ class YedOperation {
         }
     }
 
+    /**
+    * Removes column from the database if it has been removed from the current column settings
+    * @param String $model_name the class name of the model
+    * @param String $column_params the current column parameters
+    * @param String $migrate_params last migrated column parameters
+    */
     public static function dropRemovedColumns($model_name, $column_params, $migrate_params){
         foreach ($migrate_params as $column_name => $value) {
             if(!isset($column_params[$column_name])){

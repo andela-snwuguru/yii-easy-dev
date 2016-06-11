@@ -1,4 +1,13 @@
 <?php
+
+/**
+* YedActiveRecord is the base model class to be extended by all models
+* @property array $columns model columns configuration. to be configured in setColumns method in the child class
+* @property string $_table_name the name of table to be created in database
+* @property boolean $log if enabled, all create, update and delete activity of the model will be logged
+* @property boolean $applyDefaultColumns if false, defaultColumns configured in YedModule settings will not be applied to the child model
+* @property array $additional_label configure additional label parameters such as relationship chain
+*/
 abstract class YedActiveRecord extends CActiveRecord
 {
     public static $columns = array();
@@ -20,6 +29,9 @@ abstract class YedActiveRecord extends CActiveRecord
     */
     public static function setColumns(){
         self::$columns = array();
+
+        # Don't remove this return statement
+        return self::$columns;
     }
 
 
