@@ -70,6 +70,23 @@ class YedOperation {
         return $parse_columns;
     }
 
+  /**
+    * Returns an array of key value pair of defined columns from a model
+    * @param String $model_name the class name of the model
+    * @return Array
+    */
+    static function getFormFields($model_name){
+        $columns = $model_name::setColumns();
+        $parse_columns = array();
+        foreach ($columns as $key => $value) {
+            if(!isset($value['form']))
+                continue;
+            $parse_columns[$key] = $value['form'];
+        }
+
+        return $parse_columns;
+    }
+
     /**
     * Creates table in database with table name specified in the model
     * This method will also create the columns as defined in the model
