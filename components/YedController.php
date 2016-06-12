@@ -28,6 +28,7 @@
  *@property array $viewColumns list of columns to display in detail view
  *@property array $adminColumns list of columns to display in admin view
  *@property array $indexColumns list of columns to display in list view
+ *@property array $relations list of has many relations to display in detail view
  *@property string $prepend element to display at the top of a view
  *@property string $append element to display at the bottom of a view
  *
@@ -59,6 +60,7 @@ class YedController extends Controller
     public $viewColumns = array();
     public $adminColumns = array();
     public $indexColumns = array();
+    public $relations = array();
     public $prepend = '';
     public $append = '';
 

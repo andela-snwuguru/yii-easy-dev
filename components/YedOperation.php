@@ -70,6 +70,22 @@ class YedOperation {
         return $parse_columns;
     }
 
+    /**
+    * Returns an array of key value pair of defined columns as a relation
+    * @param String $model_name the class name of the model
+    * @return Array
+    */
+    static function getRelations($model_name){
+        $columns = $model_name::setColumns();
+        $parse_columns = array();
+        foreach ($columns as $key => $value) {
+            if(isset($value['field']))
+                continue;
+            $parse_columns[$key] = $value;
+        }
+        return $parse_columns;
+    }
+
   /**
     * Returns an array of key value pair of defined columns from a model
     * @param String $model_name the class name of the model
