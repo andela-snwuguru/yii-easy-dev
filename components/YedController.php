@@ -63,7 +63,7 @@ class YedController extends Controller
     public $append = '';
 
 
-     public function beforeAction($action){
+    public function beforeAction($action){
         $this->validatePageAccess();
         $this->modelTitle = YedUtil::spaceCap($this->modelName);
         $this->setPageHeaders();
@@ -183,8 +183,7 @@ class YedController extends Controller
      */
     public function actionDelete($id)
     {
-        if(Yii::app()->request->isPostRequest)
-        {
+        if(Yii::app()->request->isPostRequest){
             $model = $this->loadModel($id);
             $this->beforeDelete($model);
             $model->delete();
@@ -284,6 +283,17 @@ class YedController extends Controller
                 ),
         );
         $this->addMenu($this->additionalMenu);
+    }
+
+    public function getBreadcrum(){
+        $breadcrum = array(
+                'view'=>array($this->modelTitle => array('admin'), 'View'),
+                'update'=>array($this->modelTitle => array('admin'), 'Update'),
+                'create'=>array($this->modelTitle => array('admin'), 'Create'),
+                'index'=>array($this->modelTitle => array('admin'), 'List'),
+                'admin'=>array($this->modelTitle),
+            );
+        return $breadcrum[Yii::app()->controller->action->id];
     }
 
     /*
