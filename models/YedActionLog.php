@@ -8,8 +8,8 @@ class YedActionLog extends YedActiveRecord
     public static function setColumns(){
         self::$columns = array(
             'user_id'=>array('field'=>YedColumn::integerField()),
-            'model_name'=>array('field'=>YedColumn::charField()),
-            'model_id'=>array('field'=>YedColumn::integerField()),
+            'model_name'=>array('field'=>YedColumn::charField(), 'like'=>false),
+            'model_id'=>array('field'=>YedColumn::integerField(), 'like'=>false),
             'action'=>array('field'=>YedColumn::charField()),
             'model_data'=>array('field'=>YedColumn::longTextField()),
             'system_info'=>array('field'=>YedColumn::longTextField()),

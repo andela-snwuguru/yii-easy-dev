@@ -333,6 +333,7 @@ class YedRender {
             array(
                 'id' => $ctrl->formId,
                 'type' => $ctrl->formType,
+                'enableAjaxValidation'=>true,
                 'htmlOptions' => array(
                     'class' => $ctrl->formClass,
                     'enctype' => 'multipart/form-data',

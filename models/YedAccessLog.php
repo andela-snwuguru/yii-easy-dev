@@ -27,14 +27,14 @@ class YedAccessLog extends YedActiveRecord
         return parent::model($className);
     }
 
-    public static function add($action, $model){
+    public static function add(){
         $controller_id = Yii::app()->controller->id;
         $actionid = Yii::app()->controller->action->id;
         $model = new self;
         $model->user_id = Y::userId();
         $model->action = $actionid;
         $model->controller = $controller_id;
-        $model->data = self::getRequest();
+        $model->data = Y::getRequest();
         $model->save(false);
     }
 

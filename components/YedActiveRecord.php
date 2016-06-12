@@ -163,7 +163,8 @@ abstract class YedActiveRecord extends CActiveRecord
         $fields = YedOperation::getColumns(get_class($this));
         $criteria = new CDbCriteria;
         foreach ($fields as $field=>$value){
-            $criteria->compare($field, $this->$field, true);
+            $like =  isset(static::$columns[$field]['like']) && !static::$columns[$field]['like'] ? false : true;
+            $criteria->compare($field, $this->$field, $like);
         }
 
         $criteria->order = Y::getModule()->default_order;
