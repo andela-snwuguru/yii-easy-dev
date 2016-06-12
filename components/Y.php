@@ -262,10 +262,6 @@ class Y
 
 
     static function upload($subpath,$model,$name_suffix = 'FA',$fieldname = 'image'){
-        /* Yii::import('application.vendors.wideimage.lib.WideImage');
-         $folder=Yii::getPathOfAlias('webroot').'/uploads/user1/';// folder for uploaded files
-         // WideImage::load($folder.'anim.jpg')->resize(300, 200, 'outside', 'down')->saveToFile($folder.'anim7.jpg');
-         WideImage::load($folder.'anim.jpg')->crop('right', 'center', 400, 450)->saveToFile($folder.'crop1.jpg');*/
         $file_name = preg_replace('/\s+/', '_', get_class($model).'_'.$name_suffix);
         $filepath = '/uploads'.$subpath;
         $upload = new Upload($model,$subpath);
