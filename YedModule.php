@@ -10,7 +10,7 @@
  * @property boolean $dropColumn set to true for dropping existing column during migration
  * @property string $buttonLabelCreate the label of submit button during new record if you are using YedFormRender
  * @property string $buttonLabelUpdate the label of submit button during update if you are using YedFormRender
- * @property boolean $useDefaultColumns allow default columns
+ * @property boolean $useDefaultColumns allow default columns to be applied to model migration
  * @property string $default_order sort order for data provider
  * @property array $default_columns list of columns to apply automatically to all registered models
  */
