@@ -1,5 +1,5 @@
 # YII Easy Development (YED)
-YED is a project that facilitate rapid web application development using YII Framework. YED gives your YII Model an ORM feel, you only need to define the columns configurations in the model and execute YED migration.
+YED is a module that facilitate rapid web application development using YII Framework. YED gives your YII Model an ORM feel, you only need to define the columns configurations in the model and execute YED migration.
 
 YED also have a base controller that implements dynamic CRUD which works for all models. The base controller have several class properties that you can configure to your taste.
 
@@ -36,7 +36,7 @@ YED currently works perfect in YII 1.x.x
 - Visit ``http://domain/yed/install`` on your browser to run yed default models migration
 - set install value to false or remove it totally as the default value is false
 
-## YED Configuration
+## YED Module Configuration
 See below for all available configurable parameters of YED with their default values<br/>
 ```
 'yed'=> array(
@@ -229,9 +229,9 @@ YED provides utility class to facilitate rapid development
 # Demo
 Demo will be available soon. click here to see demo project repository.
 
-# To DOs
+# To Do
 - Support for Material UI Element
 - YED 2 for YII 2
 
 # Contribution
-Feel free to improve this solution or fix any issues found in the solution. You can also volunteer to carry out any of the to do list above.
+Feel free to improve this solution or fix any issues found in the solution. You can also volunteer to carry out any of the to do listed above.
