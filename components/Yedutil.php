@@ -141,13 +141,13 @@ class Yedutil
 
     public static function formatPhoneNumber($number) {
         $rx = "/
-    (1)?\D*
-    (\d{3})?\D*
-    (\d{3})\D*
-    (\d{4})
-    (?:\D+|$)
-    (\d*)
-/x";
+            (1)?\D*
+            (\d{3})?\D*
+            (\d{3})\D*
+            (\d{4})
+            (?:\D+|$)
+            (\d*)
+        /x";
         preg_match($rx, $number, $matches);
         if(!isset($matches[0])) return false;
 
@@ -162,9 +162,8 @@ class Yedutil
         if(!empty($country)) $out = "+$country$out";
         if(!empty($ext)) $out .= "x$ext";
 
-// check that no digits were truncated
-// if (preg_replace('/\D/', '', $s) != preg_replace('/\D/', '', $out)) return false;
-        return '+234'.$out;
+        if (preg_replace('/\D/', '', $s) != preg_replace('/\D/', '', $out)) return false;
+        return $out;
     }
 
     public static function generateRandomString($length = 6, $validCharacters = '') {
@@ -345,7 +344,6 @@ class Yedutil
         }
 
         $reformat_2 = str_ireplace('/','-',$date);
-        //echo $reformat_2;die;
         $stamp_date = strtotime($reformat_2);
         if($stamp_date > $stamp_date2)
             return 'G';
@@ -605,10 +603,8 @@ class Yedutil
             ob_clean();
             flush();
             readfile($dir);
-//exit;
         } else {
             die("File not found.");
-//$this->render('error_download');
         }
     }
 
@@ -663,27 +659,10 @@ class Yedutil
         $data = array();
         if(!empty($_POST)){
             foreach($_POST as $key=>$val){
-                //if($key != 'stage'){
                 $data[$key] = $val;
-                //}
             }
         }
         return $data;
-    }
-
-    /*
-     * return list of hours for drop down list
-     */
-    public static function getHours(){
-        $hours = array(''=>'N/A');
-        for($i = 1; $i < 25; $i++){
-            if($i < 10){
-                $hours[$i] = '0'.$i;
-            }else{
-                $hours[$i] = $i;
-            }
-        }
-        return $hours;
     }
 
     static function parseDateTime($string, $timezone=null) {
@@ -754,7 +733,6 @@ class Yedutil
             exit(0);
         }
 
-        //echo 'you have CORS<br/>';
     }
 
     static function getInnerSubstring($string, $boundstring, $trimit=false) {
@@ -810,15 +788,6 @@ class Yedutil
         exit;
     }
 
-    public static function shutdown(){
-
-        $error = error_get_last();
-        if ($error['type'] === E_ERROR) {
-            Y::exception('wooo');
-        }
-
-    }
-
     public static function array_unshift_assoc(&$arr, $key, $val){
         $arr = array_reverse($arr, true);
         $arr[$key] = $val;
@@ -872,22 +841,6 @@ class Yedutil
         return '';
     }
 
-    public static function watchScript(){
-        try{
-            $t1 = time(); // start to mesure time.
-            while (true) { // put your long-time loop condition here
-                $time_spent = time() - $t1;
-                if($time_spent >= (60)) {
-                    throw new Exception('Time Limit reached');
-                }
-                // do work here
-            }
-        } catch(Exception $e) {
-           YedUtil::debug($e);
-        }
-    }
-
-
     static function compare($str1,$str2){
         $arg = explode(',',$str1);
         foreach($arg as $val){
@@ -918,5 +871,51 @@ class Yedutil
         return $comment;
 
     }
+
+
+    static function domain($compare_domain = ''){
+        $domain = str_ireplace('www.','',$_SERVER['HTTP_HOST']);
+        if(!empty($compare_domain))
+            return $compare_domain == $domain;
+
+        return $domain;
+    }
+
+    static function isInUrl($string){
+        return strpos($_SERVER['REQUEST_URI'],$string);
+    }
+
+    static function domainNot($domain){
+        return self::domain() != $domain ;
+    }
+
+    static function getDateCondition($colname,$date_from = '', $date_to = '',$format = true,$date_format = 'Y-m-d H:m:i'){
+        $cond = '';
+        if($format){
+            if(!empty($date_from))
+                $cond .= (!empty($cond) ? ' AND ': '').$colname.' >= "'.date($date_format,$date_from).'"';
+
+            if(!empty($date_to))
+                $cond .= (!empty($cond) ? ' AND ': '').$colname.' <= "'.date($date_format,($date_to +(60*60*12))).'"';
+
+        }else{
+            if(!empty($date_from))
+                $cond .= (!empty($cond) ? ' AND ': '').$colname.' >= "'.$date_from.'"';
+
+            if(!empty($date_to)){
+                $cond .= (!empty($cond) ? ' AND ': '').$colname.' <= "'.($date_to +(60*60*12)).'"';
+            }
+
+        }
+
+        return $cond;
+    }
+
+
+    static function cleanString($string) {
+        $string = str_replace(' ', '', $string); // Replaces all spaces.
+        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
+    }
+
 
 }

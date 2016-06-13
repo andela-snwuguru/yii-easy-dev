@@ -3,7 +3,7 @@
 class Y
 {
 
-	public static function url($alias,$check_session = false){
+	public static function url($alias, $check_session = false){
         $url = $alias;
         if(self::session('redirect_to') && $check_session){
             $url = self::session('redirect_to');
@@ -288,11 +288,6 @@ class Y
         throw new CHttpException(404,$msg);
     }
 
-    static function cleanString($string) {
-        $string = str_replace(' ', '', $string); // Replaces all spaces.
-        return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
-    }
-
 
     static function session($key,$value = ''){
         if($value){
@@ -323,42 +318,3 @@ class Y
             unset(Yii::app()->session[$key]);
 
     }
-
-    static function domain($compare_domain = ''){
-        $domain = str_ireplace('www.','',$_SERVER['HTTP_HOST']);
-        if(!empty($compare_domain))
-            return $compare_domain == $domain;
-
-        return $domain;
-    }
-
-    static function isInUrl($string){
-        return strpos($_SERVER['REQUEST_URI'],$string);
-    }
-
-    static function domainNot($domain){
-        return self::domain() != $domain ;
-    }
-
-    static function getDateCondition($colname,$date_from = '', $date_to = '',$format = true,$date_format = 'Y-m-d H:m:i'){
-        $cond = '';
-        if($format){
-            if(!empty($date_from))
-                $cond .= (!empty($cond) ? ' AND ': '').$colname.' >= "'.date($date_format,$date_from).'"';
-
-            if(!empty($date_to))
-                $cond .= (!empty($cond) ? ' AND ': '').$colname.' <= "'.date($date_format,($date_to +(60*60*12))).'"';
-
-        }else{
-            if(!empty($date_from))
-                $cond .= (!empty($cond) ? ' AND ': '').$colname.' >= "'.$date_from.'"';
-
-            if(!empty($date_to)){
-                $cond .= (!empty($cond) ? ' AND ': '').$colname.' <= "'.($date_to +(60*60*12)).'"';
-            }
-
-        }
-
-        return $cond;
-    }
-}

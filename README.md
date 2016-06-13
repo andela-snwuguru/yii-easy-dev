@@ -16,6 +16,7 @@ YED also have a base controller that implements dynamic CRUD which works for all
 - Automatic handling of file uploads
 
 ## Installation
+YED currently works perfect in YII 1.x.x
 - Download yii-easy-dev.zip
 - Extract content into yed folder in your project module folder
 - Add yed to your module configuration settings<br/>
@@ -183,5 +184,53 @@ Note: null, unique, and max_length are used as part of validation rules generate
 ),
 ```
 
+# YED Base Controller
+YedController is the customized base controller class. All controller classes for your application that needs dynamic CRUD should extend from this base class.
+
+### YED Controller Properties
+ *@property array $sectionTitles Title in each section. index one is for section one and so on.
+ *@property array $sectionColumns Number of columns in each section. index one is for section one and so on.
+ *@property string $formType form display type; (vertical, horizontal and inline)
+ *@property string $formClass css class to apply in form tag
+ *@property string $formId form id attribute value
+ *@property string $sectionClass css class to apply in each section wrapper
+ *@property string $submitFooterClass css class to apply in submit button wrapper
+ *@property string $modelName model class name for CRUD operation
+ *@property string $modelTitle spaced words of modelName
+ *@property string $alias path to default YED views
+ *@property boolean $isUpload set to true if the model has a file field
+ *@property array $pageHeaders configure controller action title
+ *@property array $subMenuTitles configure sub menu titles by action id (action_id=>title)
+ *@property array $additionalMenu additional menu configuration
+ *@property boolean $disableCreate if enabled, the create action will not be accessible
+ *@property boolean $disableUpdate if enabled, the update action will not be accessible
+ *@property boolean $disableView if enabled, the view action will not be accessible
+ *@property boolean $disableDelete if enabled, the delete action will not be accessible
+ *@property boolean $disableAdmin if enabled, the admin action will not be accessible
+ *@property boolean $disableIndex if enabled, the index action will not be accessible
+ *@property boolean $disableLog if disabled, every controller action visit will be logged
+ *@property boolean $enableAjaxValidation enable for Ajax validation
+ *@property boolean $addActionButtons if disabled, action buttons in admin view will not be visible
+ *@property array $viewColumns list of columns to display in detail view
+ *@property array $adminColumns list of columns to display in admin view
+ *@property array $indexColumns list of columns to display in list view
+ *@property array $relations list of has many relations to display in detail view
+ *@property string $prepend element to display at the top of a view
+ *@property string $append element to display at the bottom of a view
+
+# Utilities
+YED provides utility class to facilitate rapid development
+* Y class contains helper functions that has to do with YII operations
+* YedUtil class contains helper functions for PHP. It good to mention here that some function in this class was implement by different author and has not been properly tested but might be useful to your project.
+* Upload class handles file upload. See implementation in Y class
+* YedRender class contains several UI elements that you can render directly from any view. Currently supports <a href="http://yiibooster.clevertech.biz/">Yiibooster</a> UI widgets
+
+# Demo
+Demo will be available soon. click here to see demo project repository.
+
+# To DOs
+- Support for Material UI Element
+- YED 2 for YII 2
+
 # Contribution
-Feel free to improve the solution or fix any issues found in the solution and raise pull request.
+Feel free to improve this solution or fix any issues found in the solution. You can also volunteer to carry out any of the to do list above.
