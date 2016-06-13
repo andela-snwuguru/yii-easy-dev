@@ -58,16 +58,20 @@ See below for all available configurable parameters of YED with their default va
     )
 ```
 
+## Model Properties
+YedActiveRecord is the base model class to be extended by all models
+* @property array $columns model columns configuration.
+* @property string $_table_name the name of table to be created in database
+* @property boolean $log if enabled, all create, update and delete activity of the model will be logged
+* @property boolean $applyDefaultColumns if false, defaultColumns configured in YedModule settings will not be applied to the child model
+* @property array $additional_label configure additional label parameters such as relationship chain
+
 ## Model Columns Configurations
 See below for all available configurable parameters of models extending YedActiveRecord class with their default values or sample values. <br/>
 
 ### Sample Columns Configuration
 ```
-/**
-* Configure model columns setting within this method
-*/
-public static function setColumns(){
-    self::$columns = array(
+    public static $columns = array(
         'column_name'=>array(
             'field'=>array('type'=>'textField'),
             'owner'=>array('model'=>'ModelName','key'=>'relationAccessKey'),
@@ -85,13 +89,15 @@ public static function setColumns(){
                     ),
                 )
             ),
-        'manyRelation'=>YedColumn::many('ModelName','column_name'),
-        'oneRelation'=>YedColumn::one('ModelName','column_name'),
+        'many'=>array(
+            'key1'=>array('ModelName1','column_name1'),
+            'key2'=>array('ModelName2','column_name2'),
+        ),
+        'one'=>array(
+            'key1'=>array('ModelName1','column_name1'),
+            'key2'=>array('ModelName2','column_name2'),
+        ),
     );
-
-    # Don't remove this return statement
-    return self::$columns;
-}
 ```
 
 ### Field Configuration
@@ -154,6 +160,27 @@ Note: null, unique, and max_length are used as part of validation rules generate
     ),
 )
 
+```
+
+### Many Configuration
+``many`` is used to list all the one to many relation that exist in the model
+
+```
+'many'=>array(
+    'key1'=>array('ModelName1','column_name1'),
+    'key2'=>array('ModelName2','column_name2'),
+),
+
+```
+
+### One Configuration
+``one`` is used to list all the one to one relation that exist in the model
+
+```
+'one'=>array(
+    'key1'=>array('ModelName1','column_name1'),
+    'key2'=>array('ModelName2','column_name2'),
+),
 ```
 
 # Contribution
