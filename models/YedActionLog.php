@@ -4,9 +4,7 @@ class YedActionLog extends YedActiveRecord
 {
     public static $_table_name = 'yed_action_log';
     public $log = false;
-
-    public static function setColumns(){
-        self::$columns = array(
+    public static $columns = array(
             'user_id'=>array('field'=>array('type'=>'integerField')),
             'model_name'=>array('field'=>array('type'=>'charField'), 'like'=>false),
             'model_id'=>array('field'=>array('type'=>'integerField'), 'like'=>false),
@@ -14,9 +12,6 @@ class YedActionLog extends YedActiveRecord
             'model_data'=>array('field'=>array('type'=>'longTextField')),
             'system_info'=>array('field'=>array('type'=>'longTextField')),
         );
-
-        return self::$columns;
-    }
 
 
     /**

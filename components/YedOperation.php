@@ -56,7 +56,7 @@ class YedOperation {
     * @return Array
     */
     static function getColumns($model_name){
-        $columns = $model_name::setColumns();
+        $columns = $model_name::$columns;
         $parse_columns = array();
          if(Y::getModule()->useDefaultColumns){
             $columns = array_merge(Y::getModule()->default_columns, $columns);
@@ -82,7 +82,7 @@ class YedOperation {
     * @return Array
     */
     static function getRelations($model_name){
-        $columns = $model_name::setColumns();
+        $columns = $model_name::$columns;
         $parse_columns = array();
         foreach ($columns as $key => $value) {
             if(isset($value['field']))
@@ -101,7 +101,7 @@ class YedOperation {
     * @return Array
     */
     static function getFormFields($model_name){
-        $columns = $model_name::setColumns();
+        $columns = $model_name::$columns;
         $parse_columns = array();
         foreach ($columns as $key => $value) {
             if(!isset($value['form']))

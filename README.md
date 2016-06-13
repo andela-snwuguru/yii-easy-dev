@@ -155,3 +155,6 @@ Note: null, unique, and max_length are used as part of validation rules generate
 )
 
 ```
+
+# Contribution
+Feel free to improve the solution or fix any issues found in the solution and raise pull request.

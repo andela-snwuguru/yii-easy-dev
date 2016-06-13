@@ -4,17 +4,12 @@ class YedAccessLog extends YedActiveRecord
 {
     public static $_table_name = 'yed_access_log';
     public $log = false;
-
-    public static function setColumns(){
-        self::$columns = array(
+    public static $columns = array(
             'user_id'=>array('field'=>array('type'=>'integerField')),
             'action'=>array('field'=>array('type'=>'charField')),
             'controller'=>array('field'=>array('type'=>'charField')),
             'data'=>array('field'=>array('type'=>'longTextField')),
         );
-
-        return self::$columns;
-    }
 
 
     /**

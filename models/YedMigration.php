@@ -4,16 +4,12 @@ class YedMigration extends YedActiveRecord
 {
     public static $_table_name = 'yed_migration';
     public $log = false;
-
-    public static function setColumns(){
-        self::$columns = array(
+    public static $columns = array(
             'user_id'=>array('field'=>array('type'=>'integerField')),
             'code'=>array('field'=>array('type'=>'charField')),
             'model'=>array('field'=>array('type'=>'charField')),
             'params'=>array('field'=>array('type'=>'longTextField')),
         );
-        return self::$columns;
-    }
 
 
     /**
