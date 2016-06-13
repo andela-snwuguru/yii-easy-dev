@@ -87,7 +87,10 @@ class YedOperation {
         foreach ($columns as $key => $value) {
             if(isset($value['field']))
                 continue;
-            $parse_columns[$key] = $value;
+            foreach ($value as $key => $value) {
+                $parse_columns[$key] = $value;
+            }
+
         }
         return $parse_columns;
     }

@@ -73,6 +73,7 @@ public static function setColumns(){
             'owner'=>array('model'=>'ModelName','key'=>'relationAccessKey'),
             'validation'=>array('numerical'=>true,'custom'=>array('unique')),
             'label'=>'Column Custom Label',
+            'like'=>true,
             'form'=>array(
                     'type'=>'dropdown',
                     'section'=>1,
@@ -144,6 +145,7 @@ Note: null, unique, and max_length are used as part of validation rules generate
 'form'=>array(
     'type'=>'dropdown', # type of form element, see complete list below
     'section'=>1,   # the section to place the form element
+    'like'=>true,   # set this to false if you don't want like operator search in data provider
     'data'=>'ModelName::listData()', # PHP statement that will return an array of data for drop down. Only required for dropdown
     'widgetOptions'=>array( # This is same for <a href="http://yiibooster.clevertech.biz/">Yiibooster</a>  widgetOptions
         'htmlOptions'=>array(

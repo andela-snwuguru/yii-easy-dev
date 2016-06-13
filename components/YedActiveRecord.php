@@ -141,18 +141,30 @@ abstract class YedActiveRecord extends CActiveRecord
         static::setColumns();
         $relations = array();
         $fields = static::$columns;
+        if($fields){
+            foreach($fields as $field=>$value) {
+                if(isset($value['owner'])){
+                    if(!isset($value['owner']['model']))
+                        Y::exception($field.' owner model has not been defined');
 
-        foreach($fields as $field=>$value) {
-            if(isset($value['owner'])){
-                if(!isset($value['owner']['model']))
-                    Y::exception($field.' owner model has not been defined');
-
-                $key = isset($value['owner']['key']) ? $value['owner']['key'] : strtolower($value['owner']['model']);
-                $relations[$key] = YedColumn::owner($value['owner']['model'], $field);
-            }elseif(!isset($value['field'])){
-                $relations[$field] = $value;
+                    $key = isset($value['owner']['key']) ? $value['owner']['key'] : strtolower($value['owner']['model']);
+                    $relations[$key] = YedColumn::owner($value['owner']['model'], $field);
+                }
             }
         }
+
+        if(isset($fields['many'])){
+            foreach($fields['many'] as $key=>$value) {
+                $relations[$key] = YedColumn::many($value[0], $value[1]);
+            }
+        }
+
+        if(isset($fields['one'])){
+            foreach($fields['one'] as $key=>$value) {
+                $relations[$key] = YedColumn::one($value[0], $value[1]);
+            }
+        }
+
         return $relations;
     }
 

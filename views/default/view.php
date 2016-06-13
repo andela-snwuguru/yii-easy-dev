@@ -23,14 +23,12 @@ if($this->relations){
         $params = array(
             'id'=>$key.'-grid',
         );
-        $params['columns'] = $this->adminColumns;
-
         if(isset($value['columns'])){
-            $attributes['columns'] = $value['columns'];
+            $params['columns'] = $value['columns'];
         }
         $columns = YedOperation::getRelations(get_class($model));
-        $relationModel = new $columns[$key][1]('search');
-        $relationModel->$columns[$key][2] = $model->id;
+        $relationModel = new $columns[$key][0]('search');
+        $relationModel->$columns[$key][1] = $model->id;
         $params['dataProvider'] = $relationModel->search();
         $this->widget('booster.widgets.TbGridView', $params);
     ?>
