@@ -7,12 +7,12 @@ class YedActionLog extends YedActiveRecord
 
     public static function setColumns(){
         self::$columns = array(
-            'user_id'=>array('field'=>YedColumn::integerField()),
-            'model_name'=>array('field'=>YedColumn::charField(), 'like'=>false),
-            'model_id'=>array('field'=>YedColumn::integerField(), 'like'=>false),
-            'action'=>array('field'=>YedColumn::charField()),
-            'model_data'=>array('field'=>YedColumn::longTextField()),
-            'system_info'=>array('field'=>YedColumn::longTextField()),
+            'user_id'=>array('field'=>array('type'=>'integerField')),
+            'model_name'=>array('field'=>array('type'=>'charField'), 'like'=>false),
+            'model_id'=>array('field'=>array('type'=>'integerField'), 'like'=>false),
+            'action'=>array('field'=>array('type'=>'charField')),
+            'model_data'=>array('field'=>array('type'=>'longTextField')),
+            'system_info'=>array('field'=>array('type'=>'longTextField')),
         );
 
         return self::$columns;

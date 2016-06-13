@@ -7,10 +7,10 @@ class YedMigration extends YedActiveRecord
 
     public static function setColumns(){
         self::$columns = array(
-            'user_id'=>array('field'=>YedColumn::integerField()),
-            'code'=>array('field'=>YedColumn::charField()),
-            'model'=>array('field'=>YedColumn::charField()),
-            'params'=>array('field'=>YedColumn::longTextField()),
+            'user_id'=>array('field'=>array('type'=>'integerField')),
+            'code'=>array('field'=>array('type'=>'charField')),
+            'model'=>array('field'=>array('type'=>'charField')),
+            'params'=>array('field'=>array('type'=>'longTextField')),
         );
         return self::$columns;
     }

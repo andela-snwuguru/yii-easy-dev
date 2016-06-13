@@ -7,10 +7,10 @@ class YedAccessLog extends YedActiveRecord
 
     public static function setColumns(){
         self::$columns = array(
-            'user_id'=>array('field'=>YedColumn::integerField()),
-            'action'=>array('field'=>YedColumn::charField()),
-            'controller'=>array('field'=>YedColumn::charField()),
-            'data'=>array('field'=>YedColumn::longTextField()),
+            'user_id'=>array('field'=>array('type'=>'integerField')),
+            'action'=>array('field'=>array('type'=>'charField')),
+            'controller'=>array('field'=>array('type'=>'charField')),
+            'data'=>array('field'=>array('type'=>'longTextField')),
         );
 
         return self::$columns;

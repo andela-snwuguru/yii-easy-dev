@@ -48,6 +48,24 @@ abstract class YedActiveRecord extends CActiveRecord
         foreach ($fields as $field=>$value) {
             $field_rule = array();
             $validation = isset($columns[$field]['validation']) ? $columns[$field]['validation'] : '';
+
+            if(isset($value['field']['null']) && $value['field']['null'])
+                array_push($required, $field);
+
+            if(isset($value['field']['type']) && $value['field']['type'] == 'integerField')
+                array_push($numerical, $field);
+
+
+            if(isset($value['field']['max_length'])){
+                $field_rule = array($field, 'length');
+                $field_rule['max'] = $validation['length']['max'];
+                array_push($rules,$field_rule);
+            }
+
+            if(isset($value['field']['unique']) && $value['field']['unique'] == true){
+                array_push($rules,array($field, 'unique'));
+            }
+
             if (empty($validation)){
                 array_push($safe, $field);
                 continue;

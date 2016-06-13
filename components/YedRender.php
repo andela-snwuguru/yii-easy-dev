@@ -328,16 +328,17 @@ class YedRender {
         if(empty($ctrl->formId))
             $ctrl->formId = strtolower($model_name).'Form';
 
+        $htmlOptions = array('class' => $ctrl->formClass);
+        if($ctrl->isUpload)
+            $htmlOptions['enctype'] = 'multipart/form-data';
+
         $render->form = $ctrl->beginWidget(
             'booster.widgets.TbActiveForm',
             array(
                 'id' => $ctrl->formId,
                 'type' => $ctrl->formType,
-                'enableAjaxValidation'=>true,
-                'htmlOptions' => array(
-                    'class' => $ctrl->formClass,
-                    'enctype' => 'multipart/form-data',
-                )
+                'enableAjaxValidation'=>$ctrl->enableAjaxValidation,
+                'htmlOptions' => $htmlOptions
             )
         );
 

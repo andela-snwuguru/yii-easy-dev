@@ -24,6 +24,7 @@
  *@property boolean $disableAdmin if enabled, the admin action will not be accessible
  *@property boolean $disableIndex if enabled, the index action will not be accessible
  *@property boolean $disableLog if disabled, every controller action visit will be logged
+ *@property boolean $enableAjaxValidation enable for Ajax validation
  *@property boolean $addActionButtons if disabled, action buttons in admin view will not be visible
  *@property array $viewColumns list of columns to display in detail view
  *@property array $adminColumns list of columns to display in admin view
@@ -56,6 +57,7 @@ class YedController extends Controller
     public $disableAdmin = false;
     public $disableIndex = false;
     public $disableLog = true;
+    public $enableAjaxValidation = false;
     public $addActionButtons = true;
     public $viewColumns = array();
     public $adminColumns = array();

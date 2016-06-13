@@ -30,8 +30,12 @@ class YedModule extends CWebModule
 			'YedAccessLog',
 		);
 	public $default_columns = array(
-            'id' => 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
-            'date_time' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP'
+            'id' => array(
+            		'field'=>array('type'=>'integerField','primary_key'=>true, 'increment'=>true)
+            	),
+            'date_time' => array(
+            		'field'=>array('type'=>'timestampField', 'default'=>'CURRENT_TIMESTAMP')
+            	),
         );
 
 	public function init()

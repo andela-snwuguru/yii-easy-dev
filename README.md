@@ -47,35 +47,39 @@ See below for all available configurable parameters of YED with their default va
     'buttonLabelUpdate' => 'Update', # the label of submit button during update if you are using YedFormRender
     'useDefaultColumns' => true, # allow default columns to be applied to model migration
     'default_order' => 'id DESC', # sort order for data provider
-    'default_columns' => array(
-            'id' => 'INT NOT NULL AUTO_INCREMENT PRIMARY KEY',
-            'date_time' => 'TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP'
-        ), # list of columns to apply automatically to all registered models
+    'default_columns' => array( # list of columns to apply automatically to all registered models
+            'id' => array(
+                    'field'=>array('type'=>'integerField','primary_key'=>true, 'increment'=>true)
+                ),
+            'date_time' => array(
+                    'field'=>array('type'=>'timestampField', 'default'=>'CURRENT_TIMESTAMP')
+                ),
+        ),
     )
 ```
 
 ## Model Columns Configurations
-See below for all available configurable parameters of models extending YedActiveRecord class with their default values. Some of the values are sample values. <br/>
+See below for all available configurable parameters of models extending YedActiveRecord class with their default values or sample values. <br/>
 
+### Sample Columns Configuration
 ```
 /**
 * Configure model columns setting within this method
 */
 public static function setColumns(){
     self::$columns = array(
-        'parent_id'=>array(
-            'field'=>YedColumn::integerField(array('default'=>0)),
+        'column_name'=>array(
+            'field'=>array('type'=>'textField'),
             'owner'=>array('model'=>'ModelName','key'=>'relationAccessKey'),
-            'validation'=>array('numerical'=>true),
-            'label'=>'Parent Category',
+            'validation'=>array('numerical'=>true,'custom'=>array('unique')),
+            'label'=>'Column Custom Label',
             'form'=>array(
                     'type'=>'dropdown',
                     'section'=>1,
-                    'data'=>'Category::listData();',
-                    'prompt'=>'Select Category Parent',
+                    'data'=>'ModelName::listData()',
                     'widgetOptions'=>array(
                         'htmlOptions'=>array(
-                            'prompt'=>'Select Category Parent'
+                            'prompt'=>'Select...'
                         )
                     ),
                 )
@@ -87,4 +91,65 @@ public static function setColumns(){
     # Don't remove this return statement
     return self::$columns;
 }
+```
+
+### Field Configuration
+Field holds the configuration for the database column<br/>
+
+```
+'field'=>array(
+        'type'=>'textField', # Column type, see Field type parameters section
+        'null'=>false, # allow blank insert
+        'unique'=>false, # allow duplicate record
+        'comment'=>'', # database field comment
+        'default'=>'', # column default value
+        'max_length'=>255, # column max length
+        'primary_key'=>false, # enable for a primary key index
+        'increment'=>false, # enable for auto increment column
+    )
+```
+Note: null, unique, and max_length are used as part of validation rules generated
+
+### Owner configuration
+``owner`` is used to create `BELONGS_TO` relationship between two models i.e the column is a primary key of the specified model.
+
+```
+ 'owner'=>array(
+    'model'=>'ModelName', # The model name the has this column as it primary key
+    'key'=>'relationAccessKey' # key to access the relation value
+    ),
+
+```
+### Validation Configuration
+``validation`` is used to generate the model validation rules. If validation is not defined in a column, it will be added to safe list<br/>
+
+```
+'validation'=>array(
+    'required'=>true,
+    'numerical'=>true,
+    'length'=>array('min'=>0, 'max'=>255, 'message'=>'custom error message'),
+    'pattern'=>array('match'=>'', 'message'=>'custom error message'),
+    'file'=>array('type'=>'jpg, jpeg, png, gif', 'allowEmpty'=>true),
+    'custom'=>array('unique') # List of custom validators
+    ),
+```
+
+### Label
+``label`` is used to customize column name for readability
+
+### Form Configuration
+``form`` is used to configure how the form view will be generated.<br/>
+
+```
+'form'=>array(
+    'type'=>'dropdown', # type of form element, see complete list below
+    'section'=>1,   # the section to place the form element
+    'data'=>'ModelName::listData()', # PHP statement that will return an array of data for drop down. Only required for dropdown
+    'widgetOptions'=>array( # This is same for <a href="http://yiibooster.clevertech.biz/">Yiibooster</a>  widgetOptions
+        'htmlOptions'=>array(
+            'prompt'=>'Select...'
+        )
+    ),
+)
+
 ```

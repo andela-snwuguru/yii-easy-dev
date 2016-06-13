@@ -8,11 +8,14 @@ class YedColumn
     * @param Array $params the parameters specified in the model column configuration
     * @return String
     */
-    public static function generalParams($params){
+    public static function generalParams($params, $addDefault = true){
         $null = isset($params['null']) && $params['null'] == true ? 'NULL' : 'NOT NULL';
         $unique = isset($params['unique']) && $params['unique'] == true ? 'UNIQUE INDEX' : '';
         $comment = isset($params['comment']) ? 'COMMENT "'.$params['comment'].'"' : '';
         $default = isset($params['default']) ? 'DEFAULT "'.$params['default'].'"' : '';
+        if(!$addDefault)
+            $default = '';
+
         return trim($null.' '.$unique.' '.$comment.' '.$default);
     }
 
@@ -86,8 +89,22 @@ class YedColumn
     */
     public static function datetimeField($params = array()){
         $primary_key = isset($params['primary_key']) && $params['primary_key'] == true ? 'PRIMARY KEY' : '';
+        $default = isset($params['default']) ? $default : '';
 
-        $return = 'DATETIME '.self::generalParams($params).' '. $primary_key;
+        $return = 'DATETIME '.self::generalParams($params, false).' '.$default.' '. $primary_key;
+        return trim($return);
+    }
+
+    /**
+    * Returns valid sql parameters for date data type
+    * @param Array $params the parameters specified in the model column configuration
+    * @return String
+    */
+    public static function dateField($params = array()){
+        $primary_key = isset($params['primary_key']) && $params['primary_key'] == true ? 'PRIMARY KEY' : '';
+        $default = isset($params['default']) ? $default : '';
+
+        $return = 'DATE '.self::generalParams($params, false).' '.$default.' '. $primary_key;
         return trim($return);
     }
 
@@ -98,8 +115,9 @@ class YedColumn
     */
     public static function timestampField($params = array()){
         $primary_key = isset($params['primary_key']) && $params['primary_key'] == true ? 'PRIMARY KEY' : '';
+        $default = isset($params['default']) ? $default : '';
 
-        $return = 'TIMESTAMP '.self::generalParams($params).' '. $primary_key;
+        $return = 'TIMESTAMP '.self::generalParams($params, false).' '.$default.' '. $primary_key;
         return trim($return);
     }
 

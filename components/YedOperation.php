@@ -58,15 +58,21 @@ class YedOperation {
     static function getColumns($model_name){
         $columns = $model_name::setColumns();
         $parse_columns = array();
-        foreach ($columns as $key => $value) {
-            if(!isset($value['field']))
-                continue;
-            $parse_columns[$key] = $value['field'];
+         if(Y::getModule()->useDefaultColumns){
+            $columns = array_merge(Y::getModule()->default_columns, $columns);
+        }
+        if($columns){
+            foreach ($columns as $key => $value) {
+                if(!isset($value['field']))
+                    continue;
+
+                if(!isset($value['field']['type']) || !method_exists(YedColumn, $value['field']['type'])){
+                    Y::exception("Column field type is not define or the type defined was not implemented by YedColumn");
+                }
+                $parse_columns[$key] = YedColumn::$value['field']['type']($value['field']);
+            }
         }
 
-        if(Y::getModule()->useDefaultColumns){
-            $parse_columns = array_merge($parse_columns, Y::getModule()->default_columns);
-        }
         return $parse_columns;
     }
 
