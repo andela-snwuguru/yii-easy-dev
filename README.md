@@ -188,35 +188,36 @@ Note: null, unique, and max_length are used as part of validation rules generate
 YedController is the customized base controller class. All controller classes for your application that needs dynamic CRUD should extend from this base class.
 
 ### YED Controller Properties
- *@property array $sectionTitles Title in each section. index one is for section one and so on.
- *@property array $sectionColumns Number of columns in each section. index one is for section one and so on.
- *@property string $formType form display type; (vertical, horizontal and inline)
- *@property string $formClass css class to apply in form tag
- *@property string $formId form id attribute value
- *@property string $sectionClass css class to apply in each section wrapper
- *@property string $submitFooterClass css class to apply in submit button wrapper
- *@property string $modelName model class name for CRUD operation
- *@property string $modelTitle spaced words of modelName
- *@property string $alias path to default YED views
- *@property boolean $isUpload set to true if the model has a file field
- *@property array $pageHeaders configure controller action title
- *@property array $subMenuTitles configure sub menu titles by action id (action_id=>title)
- *@property array $additionalMenu additional menu configuration
- *@property boolean $disableCreate if enabled, the create action will not be accessible
- *@property boolean $disableUpdate if enabled, the update action will not be accessible
- *@property boolean $disableView if enabled, the view action will not be accessible
- *@property boolean $disableDelete if enabled, the delete action will not be accessible
- *@property boolean $disableAdmin if enabled, the admin action will not be accessible
- *@property boolean $disableIndex if enabled, the index action will not be accessible
- *@property boolean $disableLog if disabled, every controller action visit will be logged
- *@property boolean $enableAjaxValidation enable for Ajax validation
- *@property boolean $addActionButtons if disabled, action buttons in admin view will not be visible
- *@property array $viewColumns list of columns to display in detail view
- *@property array $adminColumns list of columns to display in admin view
- *@property array $indexColumns list of columns to display in list view
- *@property array $relations list of has many relations to display in detail view
- *@property string $prepend element to display at the top of a view
- *@property string $append element to display at the bottom of a view
+
+ * @property array $sectionTitles Title in each section. index one is for section one and so on.
+ * @property array $sectionColumns Number of columns in each section. index one is for section one and so on.
+ * @property string $formType form display type; (vertical, horizontal and inline)
+ * @property string $formClass css class to apply in form tag
+ * @property string $formId form id attribute value
+ * @property string $sectionClass css class to apply in each section wrapper
+ * @property string $submitFooterClass css class to apply in submit button wrapper
+ * @property string $modelName model class name for CRUD operation
+ * @property string $modelTitle spaced words of modelName
+ * @property string $alias path to default YED views
+ * @property boolean $isUpload set to true if the model has a file field
+ * @property array $pageHeaders configure controller action title
+ * @property array $subMenuTitles configure sub menu titles by action id (action_id=>title)
+ * @property array $additionalMenu additional menu configuration
+ * @property boolean $disableCreate if enabled, the create action will not be accessible
+ * @property boolean $disableUpdate if enabled, the update action will not be accessible
+ * @property boolean $disableView if enabled, the view action will not be accessible
+ * @property boolean $disableDelete if enabled, the delete action will not be accessible
+ * @property boolean $disableAdmin if enabled, the admin action will not be accessible
+ * @property boolean $disableIndex if enabled, the index action will not be accessible
+ * @property boolean $disableLog if disabled, every controller action visit will be logged
+ * @property boolean $enableAjaxValidation enable for Ajax validation
+ * @property boolean $addActionButtons if disabled, action buttons in admin view will not be visible
+ * @property array $viewColumns list of columns to display in detail view
+ * @property array $adminColumns list of columns to display in admin view
+ * @property array $indexColumns list of columns to display in list view
+ * @property array $relations list of has many relations to display in detail view
+ * @property string $prepend element to display at the top of a view
+ * @property string $append element to display at the bottom of a view
 
 # Utilities
 YED provides utility class to facilitate rapid development
