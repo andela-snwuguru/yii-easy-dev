@@ -788,6 +788,14 @@ class Yedutil
         exit;
     }
 
+    public static function shutdown(){
+        $error = error_get_last();
+        if ($error['type'] === E_ERROR) {
+            Y::exception('wooo');
+        }
+
+    }
+
     public static function array_unshift_assoc(&$arr, $key, $val){
         $arr = array_reverse($arr, true);
         $arr[$key] = $val;
@@ -841,6 +849,22 @@ class Yedutil
         return '';
     }
 
+    public static function watchScript(){
+        try{
+            $t1 = time(); // start to mesure time.
+            while (true) { // put your long-time loop condition here
+                $time_spent = time() - $t1;
+                if($time_spent >= (60)) {
+                    throw new Exception('Time Limit reached');
+                }
+                // do work here
+            }
+        } catch(Exception $e) {
+           YedUtil::debug($e);
+        }
+    }
+
+
     static function compare($str1,$str2){
         $arg = explode(',',$str1);
         foreach($arg as $val){
@@ -873,22 +897,6 @@ class Yedutil
     }
 
 
-    static function domain($compare_domain = ''){
-        $domain = str_ireplace('www.','',$_SERVER['HTTP_HOST']);
-        if(!empty($compare_domain))
-            return $compare_domain == $domain;
-
-        return $domain;
-    }
-
-    static function isInUrl($string){
-        return strpos($_SERVER['REQUEST_URI'],$string);
-    }
-
-    static function domainNot($domain){
-        return self::domain() != $domain ;
-    }
-
     static function getDateCondition($colname,$date_from = '', $date_to = '',$format = true,$date_format = 'Y-m-d H:m:i'){
         $cond = '';
         if($format){
@@ -911,11 +919,9 @@ class Yedutil
         return $cond;
     }
 
-
     static function cleanString($string) {
         $string = str_replace(' ', '', $string); // Replaces all spaces.
         return preg_replace('/[^A-Za-z0-9\-]/', '', $string); // Removes special chars.
     }
-
 
 }

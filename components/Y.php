@@ -3,7 +3,7 @@
 class Y
 {
 
-	public static function url($alias, $check_session = false){
+	public static function url($alias,$check_session = false){
         $url = $alias;
         if(self::session('redirect_to') && $check_session){
             $url = self::session('redirect_to');
@@ -318,3 +318,5 @@ class Y
             unset(Yii::app()->session[$key]);
 
     }
+
+}

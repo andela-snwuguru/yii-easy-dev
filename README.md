@@ -32,6 +32,7 @@ YED currently works perfect in YII 1.x.x
         'application.modules.yed.components.*',
         ...
     ),
+
 ```
 - Visit ``http://domain/yed/install`` on your browser to run yed default models migration
 - set install value to false or remove it totally as the default value is false
